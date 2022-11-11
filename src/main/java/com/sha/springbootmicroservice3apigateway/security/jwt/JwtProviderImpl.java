@@ -5,9 +5,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServlet;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class JwtProviderImpl implements JwtProvider
 
     @Value("${app.jwt.expiration-in-ms}")
     private String JWT_EXPIRATION_IN_MS;
-
+    @Override
     public String generateToken(UserPrincipal auth)
     {
         String authorities = auth.getAuthorities().stream()
@@ -37,5 +39,9 @@ public class JwtProviderImpl implements JwtProvider
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_IN_MS))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
+    }
+
+    public Authentication getAuthentication(HttpServlet request) {
+        
     }
 }
