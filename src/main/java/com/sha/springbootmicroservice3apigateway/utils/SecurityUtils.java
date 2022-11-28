@@ -1,7 +1,7 @@
 package com.sha.springbootmicroservice3apigateway.utils;
 
 import javax.servlet.http.HttpServlet;
-
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.StringUtils;
@@ -20,14 +20,17 @@ public class SecurityUtils {
         return new SimpleGrantedAuthority(formattedRole);
     }
 
-    public static String extractAuthTokenFormRequest(HttpServlet request) {
+    public static String extractAuthTokenFormRequest(HttpServletRequest request) 
+    {
 
-        String bearerToken = ((Object) request).getHeader(AUTH_HEADER);
+        String bearerToken = request.getHeader(AUTH_HEADER);
 
         if(StringUtils.hasLength(bearerToken) && bearerToken.startsWith(AUTH_TOKEN_PREFIX))
         {
             return bearerToken.substring(7);
         }
+
+        return null;
         
     }
 }
