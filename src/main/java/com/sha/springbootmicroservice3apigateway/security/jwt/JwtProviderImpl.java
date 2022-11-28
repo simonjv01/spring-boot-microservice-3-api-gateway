@@ -42,6 +42,11 @@ public class JwtProviderImpl implements JwtProvider
     }
 
     public Authentication getAuthentication(HttpServlet request) {
+        Claims claims =
         
+    }
+
+    private Claims extractClaims(HttpServlet request) {
+        String token = 
     }
 }
