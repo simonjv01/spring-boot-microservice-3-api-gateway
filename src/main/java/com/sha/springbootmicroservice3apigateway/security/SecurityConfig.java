@@ -1,6 +1,7 @@
 package com.sha.springbootmicroservice3apigateway.security;
 
 
+import com.sha.springbootmicroservice3apigateway.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/authentication/**").permitAll()//login and register pre-path
                 .anyRequest().authenticated();
+    }
+
+    // don't describe as component because of scope
+    @Bean
+    public JwtAuthorizationFilter jwtAuthorizationFilter()
+    {
+        return new JwtAuthorizationFilter();
     }
 
     @Override
