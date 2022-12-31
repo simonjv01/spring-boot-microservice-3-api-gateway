@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
@@ -41,12 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
     }
 
-    // don't describe as component because of scope
-    @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter()
-    {
-        return new JwtAuthorizationFilter();
-    }
+
 
     @Override
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -62,15 +58,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    public WebMvcConfigurer corsConfigurer()
+    {
         return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
+
+            public void addCorsMapping(CorsRegistry registry)
+            {
                 registry.addMapping("/**")
                         .allowedOrigins("*")
                         .allowedMethods("*");
             }
+
         };
+
     }
 
 

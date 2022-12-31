@@ -23,7 +23,9 @@ public class UserController
     public ResponseEntity<?> changeRole(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Role role)
     {
 
-        return null;
+        userService.changeRole(role, userPrincipal.getUsername());
+
+        return ResponseEntity.ok(true);
     }
 
 }
